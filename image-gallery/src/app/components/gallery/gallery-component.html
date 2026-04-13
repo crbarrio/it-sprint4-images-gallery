@@ -1,0 +1,10 @@
+<div class="grid gap-4 max-w-6xl m-auto">
+    <div class="flex justify-center">
+        <img class="h-auto w-auto max-w-full rounded" src="{{ featuredImage().src }}" alt="{{ featuredImage().alt }}">
+    </div>
+    <div class="grid grid-cols-5 gap-4">
+        @for (item of images(); track item.id) {
+            <app-gallery-item [image] = "item" (click) = "setFeature(item)" ></app-gallery-item>
+        }
+    </div>
+</div>
