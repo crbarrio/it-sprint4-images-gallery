@@ -1,28 +1,30 @@
 import { Component, input, signal } from '@angular/core';
 import { Image } from "../../interfaces/image.interface";
-import { GalleryItemComponent } from "./gallery-item/gallery-item";
+
+import { GalleriaModule } from 'primeng/galleria';
+
 
 @Component({
   selector: 'app-gallery-component',
   templateUrl: './gallery-component.html',
-  imports: [GalleryItemComponent],
+  imports: [GalleriaModule],
 })
 export class GalleryComponent {
-
-
   images = input.required<Image[]>();
 
-  featuredImage = signal<Image>({
-    id:'',
-    src: '',
-    alt: ''
-  })
+  readonly responsiveOptions = [
+    {
+      breakpoint: '1024px',
+      numVisible: 5,
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 3,
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 1,
+    },
+  ];
 
-  setFeaturedImage(image: Image) {
-
-    this.featuredImage.set(image);
-  }
-
-  
-  
 }

@@ -8,5 +8,5 @@ import { imagesArray } from "./gallery.data";
 })
 
 export default class Gallery {
-  images = signal(imagesArray)
+  images = signal(imagesArray);
 }

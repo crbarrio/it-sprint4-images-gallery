@@ -33,24 +33,17 @@ describe('GalleryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render one gallery item per image', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const items = compiled.querySelectorAll('app-gallery-item');
-
-    expect(items.length).toBe(mockImages.length);
+  it('should pass the input images to PrimeNG galleria', () => {
+    expect(component.images()).toEqual(mockImages);
   });
 
-  it('should update featured image when selecting one item', () => {
+  it('should render the active image with alt text', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    const items = compiled.querySelectorAll('app-gallery-item');
+    const mainImage = compiled.querySelector('.p-galleria-item img');
 
-    items[1].dispatchEvent(new Event('click'));
-    fixture.detectChanges();
-
-    const featuredImage = compiled.querySelector('.flex img');
-
-    expect(component.featuredImage()).toEqual(mockImages[1]);
-    expect(featuredImage?.getAttribute('src')).toBe(mockImages[1].src);
-    expect(featuredImage?.getAttribute('alt')).toBe(mockImages[1].alt);
+    expect(mainImage?.getAttribute('src')).toBe(mockImages[0].src);
+    expect(mainImage?.getAttribute('alt')).toBe(mockImages[0].alt);
   });
+
+
 });

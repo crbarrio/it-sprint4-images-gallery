@@ -6,12 +6,14 @@ Repository for an Angular image gallery exercise developed as part of the IT Aca
 
 This project implements an Angular application based on standalone components to display an image gallery. The current structure separates the gallery page, the presentation components, and the image data model.
 
+The gallery UI is currently built with PrimeNG Galleria, keeping the app data model based on the local `Image` interface.
+
 At the moment, the repository includes:
 
 - An Angular application inside the `image-gallery/` folder.
 - Routing with a redirect to the gallery page.
 - A gallery component that receives an image collection through `input()`.
-- An item component to render each image.
+- PrimeNG Galleria integrated as the gallery renderer.
 - Local state managed with `signal()`.
 - Unit testing for the gallery page, the gallery component, and the gallery item component.
 
@@ -34,6 +36,7 @@ At the moment, the repository includes:
 - TypeScript
 - Angular Signals
 - Tailwind CSS 4
+- PrimeNG 21
 - Vitest through Angular's test builder
 
 ## Getting Started
@@ -79,6 +82,33 @@ Inside `image-gallery/src/app/`:
 - `pages/gallery/`: container page for the gallery and its related data.
 - `components/gallery/`: presentation components for the gallery.
 - `interfaces/`: TypeScript domain contracts.
+
+## PrimeNG Usage
+
+The application uses PrimeNG's `GalleriaModule` to render the image gallery.
+
+- PrimeNG is configured globally in `image-gallery/src/app/app.config.ts` using `providePrimeNG(...)`.
+- The gallery component imports `GalleriaModule` and binds the existing `Image[]` collection directly to `p-galleria`.
+- The item and thumbnail templates read from the existing `src` and `alt` properties, so no extra mapping layer is required.
+
+Minimal example from the current approach:
+
+```html
+<p-galleria
+    [value]="images()"
+    [responsiveOptions]="responsiveOptions"
+    [numVisible]="5"
+    [showItemNavigators]="true"
+>
+    <ng-template #item let-item>
+        <img [src]="item.src" [alt]="item.alt" />
+    </ng-template>
+
+    <ng-template #thumbnail let-item>
+        <img [src]="item.src" [alt]="item.alt" />
+    </ng-template>
+</p-galleria>
+```
 
 ## Exercise Goal
 
