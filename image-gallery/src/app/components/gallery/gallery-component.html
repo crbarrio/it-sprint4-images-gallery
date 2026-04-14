@@ -4,7 +4,7 @@
     </div>
     <div class="grid grid-cols-5 gap-4">
         @for (item of images(); track item.id) {
-            <app-gallery-item [image] = "item" (click) = "setFeature(item)" ></app-gallery-item>
+            <app-gallery-item [image] = "item" (click) = "setFeaturedImage(item)" ></app-gallery-item>
         }
     </div>
 </div>

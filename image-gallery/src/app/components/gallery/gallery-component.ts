@@ -18,7 +18,7 @@ export class GalleryComponent {
     alt: ''
   })
 
-  setFeature(image: Image) {
+  setFeaturedImage(image: Image) {
 
     this.featuredImage.set(image);
   }
