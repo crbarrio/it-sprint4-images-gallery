@@ -1,26 +1,40 @@
 <div class="mx-auto w-full max-w-6xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
     @if (featuredImage(); as featured) {
-    <div class="mb-4 rounded-2xl bg-white p-2 shadow-md sm:mb-6 sm:p-3">
-        <img class="gallery-featured-image mx-auto block max-h-[75vh] w-full rounded-xl object-contain" [src]="featured.src"
-            [alt]="featured.alt">
-    </div>
-
-    <div cdkDropList cdkDropListOrientation="mixed" [cdkDropListData]="thumbnails()" (cdkDropListDropped)="drop($event)" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        @for (item of thumbnails(); track item.id) {
-        <div cdkDrag class="gallery-thumbnail block w-full rounded-xl text-left">
-          <div class="cursor-pointer rounded-xl" (click)="setFeaturedImage(item)">
-            <app-gallery-item class="block w-full" [image]="item">
-            </app-gallery-item>
-            <button 
-                type="button"
-                (click)="removeImage(item.id)" 
-                class="mt-2 inline-flex items-center rounded-md border border-red-500 px-2 py-1 text-sm font-medium text-red-500 transition-colors duration-200 hover:text-white hover:bg-red-500 hover:cursor-pointer">
-                    Delete
-            </button>
-          </div>
+        <div class="mb-4 rounded-2xl bg-white p-2 shadow-md sm:mb-6 sm:p-3">
+            <img class="gallery-featured-image mx-auto block max-h-[75vh] w-full rounded-xl object-contain" [src]="featured.src"
+                [alt]="featured.alt">
         </div>
 
-        }
-    </div>
+        <div class="min-h-8 mb-2">
+            @if (selectedImageIds().size > 0) {
+            <button type="button"
+                class="inline-flex items-center rounded-md border border-red-500 px-2 py-1 text-sm font-medium  duration-200 text-white bg-red-500 hover:cursor-pointer transition-transform hover:scale-[1.02]"
+                (click)="deleteSelectedImages()">
+                Delete Selected
+            </button>
+            }
+        </div>
+
+        <div cdkDropList cdkDropListOrientation="mixed" [cdkDropListData]="thumbnails()" (cdkDropListDropped)="drop($event)" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            @for (item of thumbnails(); track item.id) {
+            <div cdkDrag class="gallery-thumbnail block w-full rounded-xl text-left">
+            <div class="cursor-pointer rounded-xl" (click)="setFeaturedImage(item)">
+                <app-gallery-item 
+                    class="block w-full"
+                    [isSelected]="selectedImageIds().has(item.id)"
+                    (selectImage)="toggleSelection(item.id)"
+                    [image]="item">
+                </app-gallery-item>
+                <button 
+                    type="button"
+                    (click)="removeImage(item.id)"
+                    class="mt-2 inline-flex items-center rounded-md border border-red-500 px-2 py-1 text-sm font-medium text-red-500 transition-colors duration-200 hover:text-white hover:bg-red-500 hover:cursor-pointer">
+                        Delete
+                </button>
+            </div>
+            </div>
+
+            }
+        </div>
     }
 </div>

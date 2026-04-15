@@ -17,3 +17,7 @@ background: rgb(241 245 249);
 .cdk-drop-list-dragging .gallery-thumbnail {
 transition: transform 200ms ease;
 }
+
+.selected-border {
+    border: 4px solid #3b82f6;
+}

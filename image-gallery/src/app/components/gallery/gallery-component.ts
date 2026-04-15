@@ -14,6 +14,7 @@ import { imagesArray } from "../../pages/gallery/gallery.data";
 export class GalleryComponent {
   images = signal<Image[]>(imagesArray);
   selectedImageId = signal<string | null>(null);
+  selectedImageIds = signal<Set<string>>(new Set());
 
   featuredImage = computed(() => {
     const selectedImageId = this.selectedImageId();
@@ -44,6 +45,17 @@ export class GalleryComponent {
     this.images.update((images) => images.filter((image) => image.id !== imageId));
   }
 
+  deleteSelectedImages() {
+    if (!confirm('Are you sure you want to delete the selected images?')) {
+      return;
+    }
+
+    const selectedIds = this.selectedImageIds();
+    this.images.update((images) => images.filter((image) => !selectedIds.has(image.id)));
+    this.selectedImageIds.set(new Set());
+  }
+
+
   drop(event: CdkDragDrop<Image[]>) {
     if (event.previousIndex === event.currentIndex) {
       return;
@@ -53,6 +65,18 @@ export class GalleryComponent {
       const reorderedImages = [...images];
       moveItemInArray(reorderedImages, event.previousIndex, event.currentIndex);
       return reorderedImages;
+    });
+  }
+
+  toggleSelection(id: string) {
+    this.selectedImageIds.update(currentIds => {
+      const newSet = new Set(currentIds);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
     });
   }
 
