@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Image } from '../../../interfaces/image.interface';
 
 @Component({
@@ -8,9 +8,16 @@ import { Image } from '../../../interfaces/image.interface';
 })
 export class GalleryItemComponent {
 
+
   image = input.required<Image>()
+  deleteImage = output<string>();
 
   imageClass = () => {
     return 'h-40 w-full rounded-xl object-cover shadow-sm transition-transform duration-300 hover:scale-[1.02] hover:cursor-pointer sm:h-48 lg:h-52';
   };
+
+  onDeleteClick($event: PointerEvent) {
+    $event.stopPropagation();
+    this.deleteImage.emit(this.image().id);
+  }
 }

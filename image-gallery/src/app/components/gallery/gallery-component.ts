@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { Image } from "../../interfaces/image.interface";
 import { GalleryItemComponent } from "./gallery-item/gallery-item";
 
@@ -9,7 +9,9 @@ import { GalleryItemComponent } from "./gallery-item/gallery-item";
 })
 
 export class GalleryComponent {
+
   images = input.required<Image[]>();
+  imageRemoved = output<string>();
   selectedImageId = signal<string | null>(null);
 
   featuredImage = computed(() => {
@@ -28,4 +30,15 @@ export class GalleryComponent {
   setFeaturedImage(image: Image) {
     this.selectedImageId.set(image.id);
   }
+
+  removeImage(imageId: string) {
+  if (confirm('Are you sure you want to delete this image?')) {
+    if (this.selectedImageId() === imageId) {
+      this.selectedImageId.set(null);
+    }
+
+    this.imageRemoved.emit(imageId);
+  }
+}
+
 }
