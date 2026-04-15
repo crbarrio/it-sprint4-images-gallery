@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { Image } from "../../interfaces/image.interface";
 import { GalleryItemComponent } from "./gallery-item/gallery-item";
 
@@ -7,22 +7,25 @@ import { GalleryItemComponent } from "./gallery-item/gallery-item";
   templateUrl: './gallery-component.html',
   imports: [GalleryItemComponent],
 })
+
 export class GalleryComponent {
-
-
   images = input.required<Image[]>();
+  selectedImageId = signal<string | null>(null);
 
-  featuredImage = signal<Image>({
-    id:'',
-    src: '',
-    alt: ''
-  })
+  featuredImage = computed(() => {
+    const selectedImageId = this.selectedImageId();
+    const images = this.images();
+
+    if (selectedImageId) {
+      return images.find((image) => image.id === selectedImageId) ?? images[0];
+    }
+
+    return images[0];
+  });
+
+  thumbnails = computed(() => this.images());
 
   setFeaturedImage(image: Image) {
-
-    this.featuredImage.set(image);
+    this.selectedImageId.set(image.id);
   }
-
-  
-  
 }

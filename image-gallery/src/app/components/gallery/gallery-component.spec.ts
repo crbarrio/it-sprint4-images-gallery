@@ -40,14 +40,32 @@ describe('GalleryComponent', () => {
     expect(items.length).toBe(mockImages.length);
   });
 
+  it('should keep thumbnails in their original order', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const thumbnailImages = Array.from(compiled.querySelectorAll('button app-gallery-item img'));
+
+    expect(thumbnailImages.map((image) => image.getAttribute('src'))).toEqual(
+      mockImages.map((image) => image.src),
+    );
+  });
+
+  it('should render the first image as featured by default', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const featuredImage = compiled.querySelector('img');
+
+    expect(component.featuredImage()).toEqual(mockImages[0]);
+    expect(featuredImage?.getAttribute('src')).toBe(mockImages[0].src);
+    expect(featuredImage?.getAttribute('alt')).toBe(mockImages[0].alt);
+  });
+
   it('should update featured image when selecting one item', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    const items = compiled.querySelectorAll('app-gallery-item');
+    const items = compiled.querySelectorAll('button');
 
     items[1].dispatchEvent(new Event('click'));
     fixture.detectChanges();
 
-    const featuredImage = compiled.querySelector('.flex img');
+    const featuredImage = compiled.querySelector('img');
 
     expect(component.featuredImage()).toEqual(mockImages[1]);
     expect(featuredImage?.getAttribute('src')).toBe(mockImages[1].src);

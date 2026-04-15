@@ -1,10 +1,27 @@
-<div class="grid gap-4 max-w-6xl m-auto">
-    <div class="flex justify-center">
-        <img class="h-auto w-auto max-w-full rounded" src="{{ featuredImage().src }}" alt="{{ featuredImage().alt }}">
+<div class="mx-auto w-full max-w-6xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+  @if (featuredImage(); as featured) {
+    <div class="mb-4 rounded-2xl bg-white p-2 shadow-md sm:mb-6 sm:p-3">
+      <img
+        class="mx-auto block max-h-[75vh] w-full rounded-xl object-contain"
+        [src]="featured.src"
+        [alt]="featured.alt">
     </div>
-    <div class="grid grid-cols-5 gap-4">
-        @for (item of images(); track item.id) {
-            <app-gallery-item [image] = "item" (click) = "setFeaturedImage(item)" ></app-gallery-item>
-        }
+
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      @for (item of thumbnails(); track item.id) {
+        <button
+          type="button"
+          class="block w-full rounded-xl text-left"
+          [class.ring-2]="item.id === featured.id"
+          [class.ring-slate-900]="item.id === featured.id"
+          [class.ring-offset-2]="item.id === featured.id"
+          (click)="setFeaturedImage(item)">
+          <app-gallery-item
+            class="block w-full"
+            [image]="item">
+          </app-gallery-item>
+        </button>
+      }
     </div>
+  }
 </div>
