@@ -15,6 +15,7 @@ At the moment, the repository includes:
 - A featured image area that updates when a thumbnail is selected.
 - Drag and drop reordering for the thumbnail collection using Angular CDK.
 - Individual image deletion from the gallery.
+- Multiple image selection and bulk deletion.
 - Unit testing for the gallery page, the gallery component, and the gallery item component.
 
 ## Features
@@ -24,6 +25,7 @@ At the moment, the repository includes:
 - Click on a thumbnail to set it as the featured image.
 - Reorder thumbnails with drag and drop.
 - Delete individual images from the gallery.
+- Select multiple images and remove them in a single action.
 - Local reactive state handled with Angular Signals.
 
 ## Repository Structure
@@ -100,8 +102,9 @@ The current implementation supports the following user interactions:
 - Selecting a different featured image by clicking a thumbnail.
 - Reordering images with drag and drop.
 - Removing an image from the gallery with a delete action.
+- Selecting multiple images and deleting them with a bulk action.
 
-Internally, the gallery state is handled inside the gallery component, which makes it possible to update the collection locally when items are reordered or removed.
+Internally, the gallery state is handled inside the gallery component, which makes it possible to update the collection locally when items are reordered, removed individually, or deleted in batches.
 
 ## Exercise Goal
 
@@ -115,4 +118,4 @@ This repository follows the briefing defined in `briefing-angular.md`, focused o
 
 ## Current Status
 
-The current implementation covers the gallery foundation together with interactive behaviors such as featured image selection, thumbnail reordering, image deletion, and unit testing. The briefing includes additional UX and feature iterations that can still be developed on top of this base.
+The current implementation covers the gallery foundation together with interactive behaviors such as featured image selection, thumbnail reordering, individual and multiple image deletion, and unit testing. The briefing includes additional UX and feature iterations that can still be developed on top of this base.
