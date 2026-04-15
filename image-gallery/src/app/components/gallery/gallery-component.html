@@ -9,8 +9,14 @@
         @for (item of thumbnails(); track item.id) {
         <div cdkDrag class="gallery-thumbnail block w-full rounded-xl text-left">
           <div class="cursor-pointer rounded-xl" (click)="setFeaturedImage(item)">
-            <app-gallery-item class="block w-full" [image]="item" (deleteImage)="removeImage($event)">
+            <app-gallery-item class="block w-full" [image]="item">
             </app-gallery-item>
+            <button 
+                type="button"
+                (click)="removeImage(item.id)" 
+                class="mt-2 inline-flex items-center rounded-md border border-red-500 px-2 py-1 text-sm font-medium text-red-500 transition-colors duration-200 hover:text-white hover:bg-red-500 hover:cursor-pointer">
+                    Delete
+            </button>
           </div>
         </div>
 
