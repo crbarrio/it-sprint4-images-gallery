@@ -1,6 +1,9 @@
 <h3 class="px-4 pt-6 text-center text-2xl font-bold sm:px-6 lg:px-8">Image Gallery</h3>
 
 <section class="pb-8">
-    <app-gallery-component [images]="images()"></app-gallery-component>
+    <app-gallery-component 
+        [images]="images()"
+        (imageRemoved)="removeImage($event)">
+    </app-gallery-component>
 </section>
 

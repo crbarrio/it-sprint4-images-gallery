@@ -12,15 +12,14 @@
         <button
           type="button"
           class="block w-full rounded-xl text-left"
-          [class.ring-2]="item.id === featured.id"
-          [class.ring-slate-900]="item.id === featured.id"
-          [class.ring-offset-2]="item.id === featured.id"
           (click)="setFeaturedImage(item)">
           <app-gallery-item
             class="block w-full"
-            [image]="item">
+            [image]="item"
+            (deleteImage)="removeImage($event)">
           </app-gallery-item>
         </button>
+        
       }
     </div>
   }

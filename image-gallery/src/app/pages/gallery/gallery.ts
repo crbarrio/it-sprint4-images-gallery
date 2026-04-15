@@ -9,4 +9,9 @@ import { imagesArray } from "./gallery.data";
 
 export default class Gallery {
   images = signal(imagesArray)
+
+  removeImage(imageId: string) {
+    this.images.update((images) => images.filter((image) => image.id !== imageId));
+  }
+
 }
