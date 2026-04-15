@@ -5,7 +5,7 @@
             [alt]="featured.alt">
     </div>
 
-    <div cdkDropList [cdkDropListData]="thumbnails()" (cdkDropListDropped)="drop($event)" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+    <div cdkDropList cdkDropListOrientation="mixed" [cdkDropListData]="thumbnails()" (cdkDropListDropped)="drop($event)" class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         @for (item of thumbnails(); track item.id) {
         <div cdkDrag class="gallery-thumbnail block w-full rounded-xl text-left">
           <div class="cursor-pointer rounded-xl" (click)="setFeaturedImage(item)">
