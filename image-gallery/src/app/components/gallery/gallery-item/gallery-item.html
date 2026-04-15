@@ -1,6 +1,7 @@
 <div>
     <img [class]="imageClass()" src="{{ image().src }}" alt=" {{ image().alt }}">
     <button 
+    type="button"
         (click)="onDeleteClick($event)" 
         class="mt-2 inline-flex items-center rounded-md border border-red-500 px-2 py-1 text-sm font-medium text-red-500 transition-colors duration-200 hover:text-white hover:bg-red-500 hover:cursor-pointer">Delete</button>
 </div>
