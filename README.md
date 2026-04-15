@@ -4,16 +4,27 @@ Repository for an Angular image gallery exercise developed as part of the IT Aca
 
 ## Description
 
-This project implements an Angular application based on standalone components to display an image gallery. The current structure separates the gallery page, the presentation components, and the image data model.
+This project implements an Angular application based on standalone components to display an interactive image gallery. The current structure separates the gallery page, the presentation components, and the image data model.
 
 At the moment, the repository includes:
 
 - An Angular application inside the `image-gallery/` folder.
 - Routing with a redirect to the gallery page.
-- A gallery component that receives an image collection through `input()`.
+- A gallery component with local state managed through `signal()`.
 - An item component to render each image.
-- Local state managed with `signal()`.
+- A featured image area that updates when a thumbnail is selected.
+- Drag and drop reordering for the thumbnail collection using Angular CDK.
+- Individual image deletion from the gallery.
 - Unit testing for the gallery page, the gallery component, and the gallery item component.
+
+## Features
+
+- Responsive gallery layout with a featured image at the top.
+- Thumbnail list that preserves the current order of the image collection.
+- Click on a thumbnail to set it as the featured image.
+- Reorder thumbnails with drag and drop.
+- Delete individual images from the gallery.
+- Local reactive state handled with Angular Signals.
 
 ## Repository Structure
 
@@ -33,6 +44,7 @@ At the moment, the repository includes:
 - Angular 21
 - TypeScript
 - Angular Signals
+- Angular CDK
 - Tailwind CSS 4
 - Vitest through Angular's test builder
 
@@ -76,9 +88,20 @@ From the `image-gallery/` folder:
 
 Inside `image-gallery/src/app/`:
 
-- `pages/gallery/`: container page for the gallery and its related data.
-- `components/gallery/`: presentation components for the gallery.
+- `pages/gallery/`: container page for the gallery route.
+- `components/gallery/`: gallery state and UI components.
 - `interfaces/`: TypeScript domain contracts.
+
+## Implemented Functionality
+
+The current implementation supports the following user interactions:
+
+- Displaying a featured image above the thumbnail collection.
+- Selecting a different featured image by clicking a thumbnail.
+- Reordering images with drag and drop.
+- Removing an image from the gallery with a delete action.
+
+Internally, the gallery state is handled inside the gallery component, which makes it possible to update the collection locally when items are reordered or removed.
 
 ## Exercise Goal
 
@@ -92,4 +115,4 @@ This repository follows the briefing defined in `briefing-angular.md`, focused o
 
 ## Current Status
 
-The current implementation covers the gallery foundation and its unit testing. The briefing includes additional UX and feature iterations that can be developed on top of this base.
+The current implementation covers the gallery foundation together with interactive behaviors such as featured image selection, thumbnail reordering, image deletion, and unit testing. The briefing includes additional UX and feature iterations that can still be developed on top of this base.
