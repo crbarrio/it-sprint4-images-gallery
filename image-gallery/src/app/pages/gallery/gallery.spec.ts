@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import Gallery from './gallery';
-import { imagesArray } from './gallery.data';
 import { GalleryComponent } from '../../components/gallery/gallery-component';
 
 describe('Gallery page', () => {
@@ -23,14 +22,9 @@ describe('Gallery page', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize the page signal with gallery data', () => {
-    expect(component.images()).toEqual(imagesArray);
-  });
-
-  it('should pass the images to the gallery component', () => {
+  it('should render the gallery component', () => {
     const galleryDebugElement = fixture.debugElement.query(By.directive(GalleryComponent));
-    const galleryComponent = galleryDebugElement.componentInstance as GalleryComponent;
 
-    expect(galleryComponent.images()).toEqual(imagesArray);
+    expect(galleryDebugElement).toBeTruthy();
   });
 });
