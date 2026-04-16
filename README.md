@@ -10,8 +10,8 @@ At the moment, the repository includes:
 
 - An Angular application inside the `image-gallery/` folder.
 - Routing with a redirect to the gallery page.
-- A gallery component with local state managed through `signal()`.
-- An item component to render each image.
+- A gallery component with local state managed through `signal()` and `computed()`.
+- A gallery item component built with Angular `input()` and `output()` signals.
 - A featured image area that updates when a thumbnail is selected.
 - Drag and drop reordering for the thumbnail collection using Angular CDK.
 - Individual image deletion from the gallery.
@@ -48,7 +48,7 @@ At the moment, the repository includes:
 - Angular Signals
 - Angular CDK
 - Tailwind CSS 4
-- Vitest through Angular's test builder
+- Vitest
 
 ## Getting Started
 
@@ -104,7 +104,7 @@ The current implementation supports the following user interactions:
 - Removing an image from the gallery with a delete action.
 - Selecting multiple images and deleting them with a bulk action.
 
-Internally, the gallery state is handled inside the gallery component, which makes it possible to update the collection locally when items are reordered, removed individually, or deleted in batches.
+Internally, the gallery state is handled inside the gallery component, which makes it possible to update the collection locally when items are reordered, removed individually, or deleted in batches. The thumbnail reordering logic lives in the gallery component's `drop()` handler, while the item component emits selection changes back to the gallery through an output signal.
 
 ## Exercise Goal
 
