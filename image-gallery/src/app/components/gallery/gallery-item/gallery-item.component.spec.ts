@@ -35,4 +35,20 @@ describe('GalleryItemComponent', () => {
     expect(imageElement?.getAttribute('src')).toBe(mockImage.src);
     expect(imageElement?.getAttribute('alt')?.trim()).toBe(mockImage.alt);
   });
+
+  it('should emit the image id when the image is clicked', () => {
+    let emittedImageId: string | undefined;
+    component.selectImage.subscribe((imageId) => {
+      emittedImageId = imageId;
+    });
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const imageElement = compiled.querySelector('img');
+    imageElement?.click();
+
+    expect(emittedImageId).toBe(mockImage.id);
+  });
+
+  
+
 });
