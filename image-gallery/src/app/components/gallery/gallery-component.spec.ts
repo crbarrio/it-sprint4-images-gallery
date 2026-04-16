@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { vi } from 'vitest';
 import { GalleryComponent } from './gallery-component';
+import { GalleryItemComponent } from './gallery-item/gallery-item';
 import { Image } from '../../interfaces/image.interface';
 
 describe('GalleryComponent', () => {
@@ -41,6 +43,19 @@ describe('GalleryComponent', () => {
     expect(items.length).toBe(mockImages.length);
   });
 
+  it('should pass the correct data to each gallery item component', () => {
+    const itemDebugElements = fixture.debugElement.queryAll(By.directive(GalleryItemComponent));
+    const itemComponents = itemDebugElements.map(
+      (debugElement) => debugElement.componentInstance as GalleryItemComponent,
+    );
+
+    expect(itemComponents.length).toBe(mockImages.length);
+    expect(itemComponents[0].image()).toEqual(mockImages[0]);
+    expect(itemComponents[1].image()).toEqual(mockImages[1]);
+    expect(itemComponents[0].isSelected()).toBe(false);
+    expect(itemComponents[1].isSelected()).toBe(false);
+  });
+
   it('should keep thumbnails in their original order', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const thumbnailImages = Array.from(compiled.querySelectorAll('.gallery-thumbnail app-gallery-item img'));
@@ -73,14 +88,38 @@ describe('GalleryComponent', () => {
     expect(featuredImage?.getAttribute('alt')).toBe(mockImages[1].alt);
   });
 
-  it('should remove an image from the gallery', () => {
-    vi.spyOn(window, 'confirm').mockReturnValue(true);
+  it('should toggle image selection and show or hide the bulk delete button', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const thumbnailImages = compiled.querySelectorAll('.gallery-thumbnail app-gallery-item img');
 
-    component.removeImage(mockImages[0].id);
+    expect(component.selectedImageIds().size).toBe(0);
+    expect(compiled.textContent).not.toContain('Delete Selected');
+
+    thumbnailImages[0].dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    expect(component.selectedImageIds().has(mockImages[0].id)).toBe(true);
+    expect(compiled.textContent).toContain('Delete Selected');
+
+    thumbnailImages[0].dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    expect(component.selectedImageIds().has(mockImages[0].id)).toBe(false);
+    expect(compiled.textContent).not.toContain('Delete Selected');
+  });
+
+  it('should remove an image from the gallery when clicking its delete button', () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    const compiled = fixture.nativeElement as HTMLElement;
+    const deleteButtons = compiled.querySelectorAll('.gallery-thumbnail button');
+
+    deleteButtons[0].dispatchEvent(new Event('click'));
+    fixture.detectChanges();
 
     expect(component.images()).toEqual([mockImages[1]]);
     expect(component.featuredImage()).toEqual(mockImages[1]);
   });
+
 
   it('should not remove an image if the user cancels the confirmation', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(false);
@@ -90,14 +129,26 @@ describe('GalleryComponent', () => {
     expect(component.featuredImage()).toEqual(mockImages[0]);
   });
 
-  it('should delete selected images', () => {
+  it('should delete selected images from the bulk action button', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true);
-    component.selectedImageIds.set(new Set([mockImages[0].id]));
-    component.deleteSelectedImages();
-  
+    const compiled = fixture.nativeElement as HTMLElement;
+    const thumbnailImages = compiled.querySelectorAll('.gallery-thumbnail app-gallery-item img');
+
+    thumbnailImages[0].dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
+    const deleteSelectedButton = Array.from(compiled.querySelectorAll('button')).find((button) =>
+      button.textContent?.includes('Delete Selected'),
+    );
+
+    deleteSelectedButton?.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+
     expect(component.images()).toEqual([mockImages[1]]);
+    expect(component.selectedImageIds().size).toBe(0);
     expect(component.featuredImage()).toEqual(mockImages[1]);
   });
+
 
   it('should not delete selected images if the user cancels the confirmation', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(false);
